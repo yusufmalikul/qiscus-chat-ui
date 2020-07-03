@@ -6,6 +6,8 @@ define(['service/emitter'], function(emitter) {
   var qiscus = new QiscusSDKCore()
 
   var appId = 'sdksample'
+  // var appId = 'dragongo'
+  // var appId = 'apptest-parvvzx2tq0si'
 
   qiscus.init({
     AppId: appId,
@@ -35,6 +37,9 @@ define(['service/emitter'], function(emitter) {
       },
       typingCallback: function(data) {
         emitter.emit('qiscus::typing', data)
+      },
+      commentDeletedCallback: function(data) {
+        emitter.emit('qiscus::comment-deleted', data)
       },
     },
   })
