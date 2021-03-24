@@ -1,9 +1,27 @@
 /* globals QiscusSDKCore */
 // This service is to bridge QiscusSDK with this sample app
 
-define(['service/emitter'], function (emitter) {
+define(['service/emitter', 'jquery'], function (emitter, $) {
   var Qiscus = QiscusSDKCore;
   var qiscus = new QiscusSDKCore();
+
+
+  console.log('inside qiscus')
+  window.getJwt = qiscus.getJwt = async function getJwt () {
+    const nonce = await qiscus.getNonce().then(it => it.nonce)
+
+    const response = await fetch('http://localhost:8000/get-jwt', {
+      method: 'POST',
+      body: JSON.stringify({ nonce }),
+      headers: {
+        ['content-type']: 'application/json'
+      },
+      mode: 'cors',
+    }).then(it => it.json())
+
+    return response
+  }
+
 
   var appId = 'sdksample';
   // var appId = 'dragongo'
@@ -15,6 +33,7 @@ define(['service/emitter'], function (emitter) {
 
   qiscus.init({
     AppId: appId,
+    // baseURL: 'https://dragongo.qiscus.com',
     // baseURL: 'https://api-dc-drc.qiscus.com',
     // baseURL: 'https://api3.qiscus.com',
     // updateCommentStatusMode: QiscusSDKCore.UpdateCommentStatusMode.throttled,
