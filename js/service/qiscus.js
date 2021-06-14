@@ -23,7 +23,7 @@ define(['service/emitter', 'jquery'], function (emitter, $) {
   }
 
 
-  var appId = 'sdksample';
+  var appId = 'qchatsdkd-fsdm3yu2oip';
   // var appId = 'dragongo'
   // var appId = 'apptest-parvvzx2tq0si'
 
