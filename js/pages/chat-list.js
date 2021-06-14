@@ -178,12 +178,21 @@ define([
   }, 100)
 
   function ChatList() {
-    qiscus.loadRoomList().then(function(rooms) {
-      if (rooms.length === 0) $content.html(Empty())
-      else $content.html(RoomList(rooms))
-    })
-
-    return Empty()
+    qiscus.chatTarget('bot')
+      .then(function (room) {
+        // On success
+        console.log(room)
+        // always open single room with bot
+        route.push('/chat-room', {
+          roomId: room.id,
+          roomName: room.name,
+          roomAvatar: room.avatar
+        })
+      })
+      .catch(function (error) {
+        // On error
+        console.log(error)
+      })
   }
 
   ChatList.path = '/chat'
